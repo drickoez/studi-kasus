@@ -1,4 +1,5 @@
 const User = require("../user/model");
+
 // const bcrypt = require("bcrypt");
 // const passport = require("passport");
 // const jwt = require("jsonwebtoken");
@@ -6,10 +7,11 @@ const User = require("../user/model");
 
 const register = async (req, res, next) => {
   try {
-    const payload = req.body;
-    let user = new User(payload);
-    await user.save();
-    return res.json(user);
+    const result = await User(req.body);
+    res.status(200).json({
+      data: result,
+    });
+    return result;
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
@@ -17,6 +19,8 @@ const register = async (req, res, next) => {
         message: err.message,
         fields: err.errors,
       });
+    } else {
+      console.log(err);
     }
     next(err);
   }
@@ -56,4 +60,4 @@ const register = async (req, res, next) => {
 //   })(req, res, next);
 // };
 
-module.exports = { register };
+module.exports = register;

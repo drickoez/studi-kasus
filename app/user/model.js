@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const userSchema = Schema(
   {
-    full_name: {
+    name: {
       type: String,
       minlength: [3, "Panjang nama harus antara 3 - 255 karakter"],
       maxlength: [255, "Panjang nama harus antara 3 - 255 karakter"],
@@ -18,14 +18,14 @@ const userSchema = Schema(
 
     email: {
       type: String,
-      required: [true, "Email harus diisi"],
       maxlength: [255, "Panjang email maksimal 255 karakter"],
+      required: [true, "Email harus diisi"],
     },
 
     password: {
       type: String,
-      required: [true, "Password harus diisi"],
       maxlength: [255, "Panjang password maksimal 255 karakter"],
+      required: [true, "Password harus diisi"],
     },
 
     role: {

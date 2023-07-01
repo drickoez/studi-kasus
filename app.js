@@ -4,10 +4,15 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
-const productRoute = require("./app/products/router");
-const categoryRoute = require("./app/category/router");
-const tagRoute = require("./app/tag/router");
-const authRoute = require("./app/auth/router");
+const { decodeToken } = require("./app/middlewares");
+const productRoute = require("./app/routers/products");
+const categoryRoute = require("./app/routers/category");
+const tagRoute = require("./app/routers/tag");
+const authRoute = require("./app/routers/auth");
+const deliveryAddressRoute = require("./app/routers/deliveryAddress");
+const cartRoute = require("./app/routers/cart");
+const orderRoute = require("./app/routers/order");
+const invoiceRoute = require("./app/routers/invoice");
 
 var app = express();
 
@@ -17,15 +22,21 @@ app.set("view engine", "pug");
 
 app.use(cors());
 app.use(logger("dev"));
+app.use(decodeToken());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(decodeToken());
 
 app.use("/auth", authRoute);
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);
 app.use("/api", tagRoute);
+app.use("/api", deliveryAddressRoute);
+app.use("/api", cartRoute);
+app.use("/api", orderRoute);
+app.use("/api", invoiceRoute);
 
 app.use("/", function (req, res) {
   res.render("index", {

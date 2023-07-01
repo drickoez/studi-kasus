@@ -1,7 +1,7 @@
 const config = require("../config");
 const { getToken, policyFor } = require("../utils");
 const jwt = require("jsonwebtoken");
-const User = require("../user/model");
+const User = require("../models/user");
 
 function decodeToken() {
   return async function (req, res, next) {

@@ -11,6 +11,7 @@ function getToken(req) {
 const policies = {
   guest(user, { can }) {
     can("read", "Product");
+    can("create", "Product");
   },
   user(user, { can }) {
     can("view", "Order");
@@ -24,15 +25,19 @@ const policies = {
     can("update", "DeliveryAddress", { user_id: user._id });
     can("delete", "DeliveryAddress", { user_id: user._id });
     can("read", "Invoice", { user_id: user._id });
+    can("update", "Invoice", { user_id: user._id });
   },
   admin(user, { can }) {
     can("manage", "all");
+    can("create", "Product");
+    can("update", "Product");
+    can("create", "DeliveryAddress");
   },
 };
 
 const policyFor = (user) => {
   let builder = new AbilityBuilder();
-  if (user && typeof policies[(user, role)] === "function") {
+  if (user && typeof policies[user.role] === "function") {
     policies[user.role](user, builder);
   } else {
     policies["guest"](user, builder);

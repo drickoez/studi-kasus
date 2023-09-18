@@ -1,4 +1,4 @@
-const User = require("../user/model");
+const User = require("../models/user");
 
 const bcrypt = require("bcrypt");
 const passport = require("passport");
@@ -8,10 +8,6 @@ const { getToken } = require("../utils");
 
 const register = async (req, res, next) => {
   try {
-    // const payload = req.body;
-    // let user = new User(payload);
-    // await user.save();
-    // return res.json(user);
     const user = await User.create(req.body);
     res.status(200).json({
       data: user,

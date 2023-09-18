@@ -1,9 +1,9 @@
 const path = require("path");
 const fs = require("fs");
 const config = require("../config");
-const Product = require("./model");
-const Category = require("../category/model");
-const Tag = require("../tag/model");
+const Product = require("../models/products");
+const Category = require("../models/category");
+const Tag = require("../models/tag");
 
 const store = async (req, res, next) => {
   try {
@@ -52,7 +52,7 @@ const store = async (req, res, next) => {
           let product = new Product({ ...payload, image_url: filename });
           await product.save();
           return res.json(product);
-        } catch (error) {
+        } catch (err) {
           fs.unlinkSync(target_path);
           if (err && err.name === "ValidationError") {
             return res.json({
@@ -73,7 +73,7 @@ const store = async (req, res, next) => {
       await product.save();
       return res.json(product);
     }
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -142,7 +142,7 @@ const update = async (req, res, next) => {
             runValidators: true,
           });
           return res.json(product);
-        } catch (error) {
+        } catch (err) {
           fs.unlinkSync(target_path);
           if (err && err.name === "ValidationError") {
             return res.json({
@@ -165,7 +165,7 @@ const update = async (req, res, next) => {
       });
       return res.json(product);
     }
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -220,7 +220,7 @@ const index = async (req, res, next) => {
       data: product,
       count,
     });
-  } catch (error) {
+  } catch (err) {
     next(err);
   }
 };

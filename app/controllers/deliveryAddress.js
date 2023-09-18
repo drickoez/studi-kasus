@@ -1,6 +1,6 @@
 const { subject } = require("@casl/ability");
 const { policyFor } = require("../utils");
-const DeliveryAddress = require("./model");
+const DeliveryAddress = require("../models/deliveryAddress");
 
 const store = async (req, res, next) => {
   try {
@@ -41,7 +41,7 @@ const update = async (req, res, next) => {
       new: true,
     });
     return res.json(address);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -57,7 +57,7 @@ const destroy = async (req, res, next) => {
   try {
     let address = await DeliveryAddress.findByIdAndDelete(req.params.id);
     return res.json(address);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -75,12 +75,12 @@ const index = async (req, res, next) => {
     let count = await DeliveryAddress.find({
       user: req.user._id,
     }).countDocuments();
-    let address = await DeliveryAddress.find({ user: req.user_id })
+    let address = await DeliveryAddress.find({ user: req.user._id })
       .skip(parseInt(skip))
       .limit(parseInt(limit))
       .sort("-createdAt");
     return res.json({ data: address, count });
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,

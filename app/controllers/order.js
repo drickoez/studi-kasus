@@ -1,8 +1,8 @@
-const CartItem = require("../order-item/model");
-const DeliveryAddress = require("../DeliveryAddress/model");
-const Order = require("../order/model");
+const CartItem = require("../models/cart-item");
+const DeliveryAddress = require("../models/deliveryAddress");
+const Order = require("../models/order");
 const { Types } = require("mongoose");
-const OrderItem = require("../order-item/model");
+const OrderItem = require("../models/order-item");
 
 const store = async (req, res, next) => {
   try {

@@ -2,10 +2,14 @@ const router = require("express").Router();
 const multer = require("multer");
 const os = require("os");
 
-const productController = require("./controller");
+const productController = require("../controllers/products");
 const { police_check } = require("../middlewares");
 
-router.get("/products", productController.index);
+router.get(
+  "/products",
+  police_check("create", "Product"),
+  productController.index
+);
 
 router.post(
   "/products",

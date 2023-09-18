@@ -1,4 +1,4 @@
-const Tags = require("./model");
+const Tags = require("../models/tag");
 
 const store = async (req, res, next) => {
   try {
@@ -6,7 +6,7 @@ const store = async (req, res, next) => {
     let tag = new Tags(payload);
     await tag.save();
     return res.json(tag);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -26,7 +26,7 @@ const update = async (req, res, next) => {
       runValidators: true,
     });
     return res.json(tag);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -42,7 +42,7 @@ const destroy = async (req, res, next) => {
   try {
     let tag = await Tags.findByIdAndDelete(req.params.id);
     return res.json(tag);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -58,7 +58,7 @@ const index = async (req, res, next) => {
   try {
     let tag = await Tags.find();
     return res.json(tag);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,

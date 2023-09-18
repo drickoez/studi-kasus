@@ -1,5 +1,5 @@
-const Product = require("../products/model");
-const CartItem = require("../cart-item/model");
+const Product = require("../models/products");
+const CartItem = require("../models/cart-item");
 
 const update = async (req, res, next) => {
   try {
@@ -53,7 +53,7 @@ const index = async (req, res, next) => {
   try {
     let item = await CartItem.find({ user: req.user._id }).populate("product");
 
-    return res.json(items);
+    return res.json(item);
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({

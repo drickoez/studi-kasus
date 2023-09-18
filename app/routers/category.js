@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { police_check } = require("../middlewares");
-const categoryController = require("./controller");
+const categoryController = require("../controllers/category");
 
 router.get("/categories", categoryController.index);
 router.post(

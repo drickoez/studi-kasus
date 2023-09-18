@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { police_check } = require("../middlewares");
-const tagController = require("./controller");
+const tagController = require("../controllers/tag");
 
 router.get("/tags", tagController.index);
 router.post("/tags", police_check("create", "Tag"), tagController.store);

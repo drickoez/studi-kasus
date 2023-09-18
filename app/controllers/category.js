@@ -1,4 +1,4 @@
-const Categories = require("./model");
+const Categories = require("../models/category");
 
 const store = async (req, res, next) => {
   try {
@@ -6,7 +6,7 @@ const store = async (req, res, next) => {
     let category = new Categories(payload);
     await category.save();
     return res.json(category);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -26,7 +26,7 @@ const update = async (req, res, next) => {
       runValidators: true,
     });
     return res.json(category);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -42,7 +42,7 @@ const destroy = async (req, res, next) => {
   try {
     let category = await Categories.findByIdAndDelete(req.params.id);
     return res.json(category);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -58,7 +58,7 @@ const index = async (req, res, next) => {
   try {
     let category = await Categories.find();
     return res.json(category);
-  } catch (error) {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
